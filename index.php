@@ -9,7 +9,8 @@ $antares->set_key('520906366fdba82e:d4fca3e60014c303');
 
 //$antares->appCreate('NyobaDeui');
 //$antares->deviceCreate('nyoba','Coba2Antares');
-$antares->appDelete('aww');
+//$antares->appDelete('aww');
+$antares->deviceDelete('sensor','aww');
 //$yourdata = $antares->get('nyoba', 'Coba2Antares');
 //$yourall = $antares->get_all('nyoba', 'Coba2Antares');
 

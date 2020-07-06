@@ -384,8 +384,8 @@ class antares_php {
     );
 
     $curl = curl_init();
-    $dataSend = array(("m2m:cnt") => array("rn" => $projectName));
-    $data_encode = json_encode($dataSend);
+    //$dataSend = array(("m2m:cnt") => array("rn" => $projectName));
+    //$data_encode = json_encode($dataSend);
     
     curl_setopt_array($curl, array(
       CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."",
@@ -396,7 +396,46 @@ class antares_php {
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "DELETE",
-      CURLOPT_POSTFIELDS =>$data_encode,
+      //CURLOPT_POSTFIELDS =>$data_encode,
+      CURLOPT_HTTPHEADER => $header,
+    ));
+    curl_exec($curl);
+    $response = curl_exec($curl);
+    $data = json_decode($response);
+    // CHECK respone status
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    if($httpCode == "200") {
+      echo "200: Success";
+      return ($data);
+    }
+    curl_close($curl);
+    //return $response;
+  }
+
+  function deviceDelete($deviceName,$projectName){
+    $keyacc = "{$this->key}";
+
+    $header = array(
+      "X-M2M-Origin: $keyacc",
+      // "X-M2M-Origin: ",
+      "Content-Type: application/json;ty=3",
+      "Accept: application/json"
+    );
+
+    $curl = curl_init();
+    //$dataSend = array(("m2m:cnt") => array("rn" => $projectName));
+    //$data_encode = json_encode($dataSend);
+    
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."/".$deviceName."/la",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "DELETE",
+      //CURLOPT_POSTFIELDS =>$data_encode,
       CURLOPT_HTTPHEADER => $header,
     ));
     curl_exec($curl);
