@@ -423,11 +423,11 @@ class antares_php {
     );
 
     $curl = curl_init();
-    //$dataSend = array(("m2m:cnt") => array("rn" => $projectName));
-    //$data_encode = json_encode($dataSend);
+    $dataSend = array(("m2m:cnt") => array("rn" => $projectName));
+    $data_encode = json_encode($dataSend);
     
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."/".$deviceName."/la",
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."/".$deviceName."",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
