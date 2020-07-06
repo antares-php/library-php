@@ -410,9 +410,9 @@ class antares_php {
     // }
     // curl_close($curl);
     //return $response;
+    // CHECK respone status
     $response = curl_exec($curl);
     $data = json_decode($response);
-    // CHECK respone status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     switch ($httpCode) {
         case 200:
@@ -467,10 +467,10 @@ class antares_php {
       CURLOPT_HTTPHEADER => $header,
     ));
     //curl_exec($curl);
-    //$response = curl_exec($curl);
+    //$response = curl_exec($curl); 
+    // CHECK respone status
     $response = curl_exec($curl);
     $data = json_decode($response);
-    // CHECK respone status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     switch ($httpCode) {
         case 200:
