@@ -62,7 +62,7 @@ class antares_php {
     $data_encode = json_encode($dataSend);
     
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."",
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName.".",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
@@ -74,10 +74,10 @@ class antares_php {
       CURLOPT_HTTPHEADER => $header,
     ));
     curl_exec($curl);
-    // CHECK respone status
+    // CHECK response status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if($httpCode == "404") {
-      echo "ERROR[003] : Something WRONG when CREATE data";
+      echo "ERROR[404] : Something WRONG when CREATE app";
     }
     curl_close($curl);
   }
@@ -399,45 +399,16 @@ class antares_php {
       //CURLOPT_POSTFIELDS =>$data_encode,
       CURLOPT_HTTPHEADER => $header,
     ));
-    // curl_exec($curl);
-    // $response = curl_exec($curl);
-    // $data = json_decode($response);
-    // // CHECK respone status
-    // $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    // if($httpCode == "200") {
-    //   echo "200: Success";
-    //   return ($data);
-    // }
-    // curl_close($curl);
-    //return $response;
-    // CHECK respone status
-    $response = curl_exec($curl);
-    $data = json_decode($response);
+    curl_exec($curl);
+    // CHECK response status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    switch ($httpCode) {
-        case 200:
-            $error_status = "200: Success";
-            return ($data);
-            break;
-        case 404:
-            $error_status = "404: API Not found";
-            break;
-        case 500:
-            $error_status = "500: servers replied with an error.";
-            break;
-        case 502:
-            $error_status = "502: servers may be down or being upgraded. Hopefully they'll be OK soon!";
-            break;
-        case 503:
-            $error_status = "503: service unavailable. Hopefully they'll be OK soon!";
-            break;
-        default:
-            $error_status = "Undocumented error: " . $httpCode . " : " . curl_error($curl);
-            break;
+    if($httpCode == "200") {
+      echo "Your app has been deleted";
+    }
+    else if($httpCode == "400") {
+      echo "Something wrong is happen, API not found";
     }
     curl_close($curl);
-    echo $error_status;
-    die;
   }
 
   function deviceDelete($deviceName,$projectName){
@@ -466,37 +437,16 @@ class antares_php {
       //CURLOPT_POSTFIELDS =>$data_encode,
       CURLOPT_HTTPHEADER => $header,
     ));
-    //curl_exec($curl);
-    //$response = curl_exec($curl); 
-    // CHECK respone status
-    $response = curl_exec($curl);
-    $data = json_decode($response);
+    // CHECK response status
+    curl_exec($curl);
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    switch ($httpCode) {
-        case 200:
-            $error_status = "200: Success";
-            return ($data);
-            break;
-        case 404:
-            $error_status = "404: API Not found";
-            break;
-        case 500:
-            $error_status = "500: servers replied with an error.";
-            break;
-        case 502:
-            $error_status = "502: servers may be down or being upgraded. Hopefully they'll be OK soon!";
-            break;
-        case 503:
-            $error_status = "503: service unavailable. Hopefully they'll be OK soon!";
-            break;
-        default:
-            $error_status = "Undocumented error: " . $httpCode . " : " . curl_error($curl);
-            break;
-    }
+      if($httpCode == "200") {
+        echo "Your device has been deleted";
+      }
+      else if($httpCode == "400") {
+        echo "Something wrong is happen, API not found";
+      }
     curl_close($curl);
-    echo $error_status;
-    die;
-    //return $response;
   }
 }
 ?>
