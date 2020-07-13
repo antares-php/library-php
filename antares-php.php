@@ -62,7 +62,7 @@ class antares_php {
     $data_encode = json_encode($dataSend);
     
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName.".",
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
@@ -74,10 +74,10 @@ class antares_php {
       CURLOPT_HTTPHEADER => $header,
     ));
     curl_exec($curl);
-    // CHECK response status
+    // CHECK respone status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if($httpCode == "404") {
-      echo "ERROR[404] : Something WRONG when CREATE app";
+      echo "ERROR[003] : Something WRONG when CREATE data";
     }
     curl_close($curl);
   }
@@ -446,6 +446,69 @@ class antares_php {
       else if($httpCode == "400") {
         echo "Something wrong is happen, API not found";
       }
+    curl_close($curl);
+  }
+
+  function dscAllDevice($projectName){
+    $keyacc = "{$this->key}";
+    $header = array(
+      "X-M2M-Origin: $keyacc",
+      "Content-Type: application/json;ty=4",
+      "Accept: application/json"
+    );
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."/?fu=1&ty=3",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => $header,
+    ));
+    //GET json Respone -> String
+    $response = curl_exec($curl);
+    // CHECK respone status
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    if($httpCode != "404") {
+      //CONVERT to array
+      $raw = json_decode('['.$response.']', true);
+      //REMOVE header
+      $temp_url = $raw[0]["m2m:uril"];
+      $count_temp =  count($temp_url);
+      $raw_data = [];
+      
+      //GET data
+      for($i = 0; $i < $count_temp; $i++){
+        $cin = curl_init();
+        curl_setopt_array($cin, array(
+          CURLOPT_URL => "https://platform.antares.id:8443/~".$temp_url[$i],
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => $header,
+        ));
+        //GET json Respone -> String
+        $cin_res = curl_exec($cin);
+        //CONVERT to array
+        $raw = json_decode('['.$cin_res.']', true);
+        //ADD data to array
+        array_push($raw_data,$raw[0]["m2m:cnt"]["ol"]);
+        curl_close($cin);  
+      }
+      //var_dump($raw_data);
+      //die();
+      return $raw_data; //-> Array
+    }else{
+      echo "ERROR[001] : Application Name or Device Name is Wrong";
+    }
     curl_close($curl);
   }
 }

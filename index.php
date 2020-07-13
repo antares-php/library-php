@@ -5,18 +5,19 @@ $antares = new antares_php();
 $antares->set_key('520906366fdba82e:d4fca3e60014c303');
 
 //$yourdata = '{"Sensor1":"coba1","Sensor2":"coba2"}';
-//$antares->send($yourdata,'nyoba', 'Coba2Antares');  
+//$antares->send($yourdata,'nyoba', 'aww');  
 
 //$antares->appCreate('NyobaDeui');
-//$antares->deviceCreate('nyoba','Coba2Antares');
+//$antares->deviceCreate('nyoba','aww');
 //$antares->appDelete('aww');
-$antares->deviceDelete('sensor','aww');
-//$yourdata = $antares->get('nyoba', 'Coba2Antares');
-//$yourall = $antares->get_all('nyoba', 'Coba2Antares');
+//$antares->deviceDelete('awug','aww');
+//$yourdata = $antares->get('nyoba', 'aww');
+$yourall = $antares->get_all('nyoba', 'aww');
+$dscAllDevice = $antares->dscAllDevice('aww');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
-  $yourlimit = $antares->get_limit($limit,'', 'awwe');
+  $yourlimit = $antares->get_limit($limit,'nyoba','aww');
 }
 ?>
 
@@ -51,6 +52,37 @@ if(array_key_exists('limit', $_POST)) {
       <div class="row">
 
         <div class="col-md-6">
+          <h1>Discover All Device Antares</h1>
+          <table>
+            <tr>
+              <th>Application</th>
+              <th>Device</th>
+            </tr>
+            <?php
+              foreach ($dscAllDevice as $key => $value) {
+            ?>
+            <tr>
+                <td>
+                  <?php
+                    $test = explode ('/',$value);
+                    echo $test[3]
+                  ?>
+                </td>
+                <td>
+                  <?php
+                    $test = explode ('/',$value);
+                    echo $test[4]
+                  ?>
+                </td>
+            </tr>
+            <?php
+              }
+            ?>
+            </td>
+          </table>
+        </div>
+        <div class="col-md-6">
+
           <h1>GET ALL Data Antares</h1>
           <table>
             <tr>
@@ -63,12 +95,12 @@ if(array_key_exists('limit', $_POST)) {
             <tr>
                 <td>
                   <?php
-                    echo $value["Sensor1"]  
+                    echo $value["Sensor1"]
                   ?>
                 </td>
                 <td>
                   <?php
-                    echo $value["Sensor2"]
+                    echo $value["Sensor2"] 
                   ?>
                 </td>
             </tr>
