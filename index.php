@@ -13,13 +13,19 @@ $antares->set_key('10f9b36c4320a16e:57cdfceb69b0bfdc');
 //$antares->deviceDelete('newSensor','mns');
 //$yourdata = $antares->get('newSensor', 'mns');
 //$yourall = $antares->get_all('newSensor', 'mns');
-$dscAllDataID = $antares->dscAllDataID('mns', 'newSensor3');
+//$dscAllDataID = $antares->dscAllDataID('newSensor3','mns');
+//$dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit,'newSensor3','mns');
 //$dscAllDevice = $antares->dscAllDevice('aww');
+
 //$dscAllApp = $antares->dscAllApp('----@---.--');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
-  $yourlimit = $antares->get_limit($limit,'nyoba','aww');
+  $yourlimit = $antares->get_limit($limit,'newSensor3','mns');
+}
+else if (array_key_exists('limit2', $_POST)) { 
+  $limit2 = $_POST["limit2"];
+  $dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit2,'newSensor3','mns');
 }
 ?>
 
@@ -96,6 +102,40 @@ if(array_key_exists('limit', $_POST)) {
               }
             ?>
             </td>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h1>Discover All ID Data on devices with Limit</h1>
+          <table>
+            <form method="post">
+              <tr>
+                <th>LIMIT : </th>
+                <th>
+                  <input type="text" id="limit2" name="limit2" value=0><br>
+                </th>
+                <th> 
+                  <input type="submit" name="button1" class="button" value="GET Limit" />  
+                </th>
+              </tr>
+            </form> 
+          </table>
+              <table>
+            <tr>  
+              <th>Data ID</th>
+            </tr>
+            <?php
+              foreach ($dscAllDataIDLimit as $key => $value) {
+            ?>
+            <tr>
+              <td>
+                <?php
+                  echo $value 
+                ?>
+              </td>
+            </tr>
+            <?php
+              }
+            ?>
           </table>
         </div>
         <div class="col-md-6">
