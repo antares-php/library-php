@@ -2,19 +2,20 @@
 
 include('antares-php.php');
 $antares = new antares_php();
-$antares->set_key('520906366fdba82e:d4fca3e60014c303');
+$antares->set_key('10f9b36c4320a16e:57cdfceb69b0bfdc');
 
 //$yourdata = '{"Sensor1":"coba1","Sensor2":"coba2"}';
-//$antares->send($yourdata,'nyoba', 'aww');  
+//$antares->send($yourdata,'newSensor3', 'mns');  
 
 //$antares->appCreate('NyobaDeui');
 //$antares->deviceCreate('asw','aww');
 //$antares->appDelete('ntap');
-//$antares->deviceDelete('asw','aww');
-//$yourdata = $antares->get('nyoba', 'aww');
-$yourall = $antares->get_all('nyoba', 'aww');
-$dscAllDevice = $antares->dscAllDevice('aww');
-$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
+//$antares->deviceDelete('newSensor','mns');
+//$yourdata = $antares->get('newSensor', 'mns');
+//$yourall = $antares->get_all('newSensor', 'mns');
+$dscAllDataID = $antares->dscAllDataID('mns', 'newSensor3');
+//$dscAllDevice = $antares->dscAllDevice('aww');
+//$dscAllApp = $antares->dscAllApp('----@---.--');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
@@ -59,6 +60,29 @@ if(array_key_exists('limit', $_POST)) {
             </tr>
             <?php
               foreach ($dscAllApp as $key => $value) {
+            ?>
+            <tr>
+                <td>
+                  <?php
+                    echo $value
+                  ?>
+                </td>
+
+            </tr>
+            <?php
+              }
+            ?>
+            </td>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h1>Discover All ID Data on devices</h1>
+          <table>
+            <tr>
+              <th>Data ID</th>
+            </tr>
+            <?php
+              foreach ($dscAllDataID as $key => $value) {
             ?>
             <tr>
                 <td>
