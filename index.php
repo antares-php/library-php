@@ -17,6 +17,7 @@ $dscAllDataID = $antares->dscAllDataID('nyoba','aww');
 $dscAllDevice = $antares->dscAllDevice('aww');
 $dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
 $dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
+$dscAllSubApp = $antares->dscAllSubApp('aww');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
@@ -134,7 +135,30 @@ else if (array_key_exists('limit2', $_POST)) {
           </table>
         </div>
         <div class="col-md-6">
-          <h1>Discover All Subscriber on devices</h1>
+          <h1>Discover All Subscribers on application</h1>
+          <table>
+            <tr>
+              <th>Subsrcibers</th>
+            </tr>
+            <?php
+              foreach ($dscAllSubApp as $key => $value) {
+            ?>
+            <tr>
+                <td>
+                  <?php
+                    echo $value
+                  ?>
+                </td>
+
+            </tr>
+            <?php
+              }
+            ?>
+            </td>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h1>Discover All Subscribers on devices</h1>
           <table>
             <tr>
               <th>Subsrcibers</th>
