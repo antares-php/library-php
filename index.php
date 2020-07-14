@@ -2,30 +2,29 @@
 
 include('antares-php.php');
 $antares = new antares_php();
-$antares->set_key('10f9b36c4320a16e:57cdfceb69b0bfdc');
+$antares->set_key('520906366fdba82e:d4fca3e60014c303');
 
 //$yourdata = '{"Sensor1":"coba1","Sensor2":"coba2"}';
-//$antares->send($yourdata,'newSensor3', 'mns');  
+//$antares->send($yourdata,'nyoba', 'aww');  
 
 //$antares->appCreate('NyobaDeui');
-//$antares->deviceCreate('asw','aww');
+//$antares->deviceCreate('nyoba','aww');
 //$antares->appDelete('ntap');
-//$antares->deviceDelete('newSensor','mns');
-//$yourdata = $antares->get('newSensor', 'mns');
-//$yourall = $antares->get_all('newSensor', 'mns');
-//$dscAllDataID = $antares->dscAllDataID('newSensor3','mns');
-//$dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit,'newSensor3','mns');
-//$dscAllDevice = $antares->dscAllDevice('aww');
-
-//$dscAllApp = $antares->dscAllApp('----@---.--');
+//$antares->deviceDelete('nyoba','aww');
+$yourdata = $antares->get('nyoba', 'aww');
+$yourall = $antares->get_all('nyoba', 'aww');
+$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
+$dscAllDevice = $antares->dscAllDevice('aww');
+$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
+$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
-  $yourlimit = $antares->get_limit($limit,'newSensor3','mns');
+  $yourlimit = $antares->get_limit($limit,'nyoba','aww');
 }
 else if (array_key_exists('limit2', $_POST)) { 
   $limit2 = $_POST["limit2"];
-  $dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit2,'newSensor3','mns');
+  $dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit2,'nyoba','aww');
 }
 ?>
 
@@ -82,6 +81,36 @@ else if (array_key_exists('limit2', $_POST)) {
           </table>
         </div>
         <div class="col-md-6">
+          <h1>Discover All Device Antares</h1>
+          <table>
+            <tr>
+              <th>Application</th>
+              <th>Device</th>
+            </tr>
+            <?php
+              foreach ($dscAllDevice as $key => $value) {
+            ?>
+            <tr>
+                <td>
+                  <?php
+                    $test = explode ('/',$value);
+                    echo $test[3]
+                  ?>
+                </td>
+                <td>
+                  <?php
+                    $test = explode ('/',$value);
+                    echo $test[4]
+                  ?>
+                </td>
+            </tr>
+            <?php
+              }
+            ?>
+            </td>
+          </table>
+        </div>
+        <div class="col-md-6">
           <h1>Discover All ID Data on devices</h1>
           <table>
             <tr>
@@ -89,6 +118,29 @@ else if (array_key_exists('limit2', $_POST)) {
             </tr>
             <?php
               foreach ($dscAllDataID as $key => $value) {
+            ?>
+            <tr>
+                <td>
+                  <?php
+                    echo $value
+                  ?>
+                </td>
+
+            </tr>
+            <?php
+              }
+            ?>
+            </td>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h1>Discover All Subscriber on devices</h1>
+          <table>
+            <tr>
+              <th>Subsrcibers</th>
+            </tr>
+            <?php
+              foreach ($dscAllSubDevice as $key => $value) {
             ?>
             <tr>
                 <td>
@@ -138,36 +190,7 @@ else if (array_key_exists('limit2', $_POST)) {
             ?>
           </table>
         </div>
-        <div class="col-md-6">
-          <h1>Discover All Device Antares</h1>
-          <table>
-            <tr>
-              <th>Application</th>
-              <th>Device</th>
-            </tr>
-            <?php
-              foreach ($dscAllDevice as $key => $value) {
-            ?>
-            <tr>
-                <td>
-                  <?php
-                    $test = explode ('/',$value);
-                    echo $test[3]
-                  ?>
-                </td>
-                <td>
-                  <?php
-                    $test = explode ('/',$value);
-                    echo $test[4]
-                  ?>
-                </td>
-            </tr>
-            <?php
-              }
-            ?>
-            </td>
-          </table>
-        </div>
+        
         <div class="col-md-6">
           <h1>GET ALL Data Antares</h1>
           <table>
