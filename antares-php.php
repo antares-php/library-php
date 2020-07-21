@@ -858,5 +858,73 @@ class antares_php {
     }
     curl_close($curl);
   }
+
+  // ==========================================
+  // Discover all data ID Antares.id in Particular Time
+  // ==========================================
+  function dscAllDataIDTime($datetime,$deviceName,$projectName){
+    $keyacc = "{$this->key}";
+    $header = array(
+      "X-M2M-Origin: $keyacc",
+      "Content-Type: application/json;ty=4",
+      "Accept: application/json" 
+    );
+    
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/$projectName/$deviceName"."/?fu=1&ty=4&crb=".$datetime,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => $header,
+    ));
+    curl_exec($curl);
+    //GET json Respone -> String
+    $response = curl_exec($curl);
+    // CHECK respone status
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    if($httpCode != "404") {
+      //CONVERT to array
+      $raw = json_decode('['.$response.']', true);
+      
+      //REMOVE header
+      $temp_url = $raw[0]["m2m:uril"];
+      $count_temp = count($temp_url);
+      $raw_data = [];
+      
+      //GET data
+      for($i = 0; $i < $count_temp; $i++){
+        $cin = curl_init();
+        curl_setopt_array($cin, array(
+          CURLOPT_URL => "https://platform.antares.id:8443/~".$temp_url[$i],
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+          CURLOPT_HTTPHEADER => $header,
+        ));
+        //GET json Respone -> String
+        $cin_res = curl_exec($cin);
+        //CONVERT to array
+        $raw = json_decode('['.$cin_res.']', true);
+        //ADD data to array
+        array_push($raw_data,$raw[0]["m2m:cin"]["rn"]);
+        // var_dump($raw_data);
+        // die();
+        curl_close($cin);  
+      }
+      return $raw_data; //-> Array
+    }else{
+      echo "ERROR[001] : Application Name or Device Name is Wrong";
+    }
+    curl_close($curl);
+  }
 }
 ?>

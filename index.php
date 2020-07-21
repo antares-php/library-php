@@ -2,8 +2,9 @@
 
 include('antares-php.php');
 $antares = new antares_php();
-$antares->set_key('520906366fdba82e:d4fca3e60014c303');
+$antares->set_key('10f9b36c4320a16e:57cdfceb69b0bfdc');
 
+$datetime = $_POST["datetime"];
 //$yourdata = '{"Sensor1":"coba1","Sensor2":"coba2"}';
 //$antares->send($yourdata,'nyoba', 'aww');  
 
@@ -11,13 +12,14 @@ $antares->set_key('520906366fdba82e:d4fca3e60014c303');
 //$antares->deviceCreate('nyoba','aww');
 //$antares->appDelete('ntap');
 //$antares->deviceDelete('nyoba','aww');
-$yourdata = $antares->get('nyoba', 'aww');
-$yourall = $antares->get_all('nyoba', 'aww');
-$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
-$dscAllDevice = $antares->dscAllDevice('aww');
-$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
-$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
-$dscAllSubApp = $antares->dscAllSubApp('aww');
+//$yourdata = $antares->get('nyoba', 'aww');
+//$yourall = $antares->get_all('nyoba', 'aww');
+//$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
+//$dscAllDevice = $antares->dscAllDevice('aww');
+//$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
+//$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
+//$dscAllSubApp = $antares->dscAllSubApp('aww');
+$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'newSensor3','mns');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
@@ -27,6 +29,13 @@ else if (array_key_exists('limit2', $_POST)) {
   $limit2 = $_POST["limit2"];
   $dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit2,'nyoba','aww');
 }
+
+// else if (array_key_exists('datetime', $POST)) {
+//   $datetime = $_POST["datetime"];
+//   $dscAllDataIDTime = $antares->dscAlldataIDTime($datetime,'newSensor3','mns');
+//   var_dump($dscAllDataIDTime);
+//   die();
+// }
 ?>
 
 <!DOCTYPE html> 
@@ -73,7 +82,6 @@ else if (array_key_exists('limit2', $_POST)) {
                     echo $value
                   ?>
                 </td>
-
             </tr>
             <?php
               }
@@ -126,7 +134,6 @@ else if (array_key_exists('limit2', $_POST)) {
                     echo $value
                   ?>
                 </td>
-
             </tr>
             <?php
               }
@@ -149,7 +156,6 @@ else if (array_key_exists('limit2', $_POST)) {
                     echo $value
                   ?>
                 </td>
-
             </tr>
             <?php
               }
@@ -172,7 +178,6 @@ else if (array_key_exists('limit2', $_POST)) {
                     echo $value
                   ?>
                 </td>
-
             </tr>
             <?php
               }
@@ -278,6 +283,42 @@ else if (array_key_exists('limit2', $_POST)) {
               <td>
                 <?php
                   echo $value["Sensor2"]
+                ?>
+              </td>
+            </tr>
+            <?php
+              }
+            ?>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h1>GET Data Antares in Particular Time</h1>
+          <table>
+            <form method="post">
+              <tr>
+                <th>Date Time : </th>
+                <th>
+                  <input type="date-time" id="datetime" name="datetime" value="Year-Month-DayTHour:Minute"><br>
+                </th>
+                <th> 
+                  <input type="submit" name="button1" class="button" value="Set Particular Time" />  
+                </th>
+              </tr>
+            </form> 
+          </table>
+          <br><br>
+          <h1>RESULT</h1>
+          <table>
+            <tr>  
+              <th>Label</th>
+            </tr>
+            <?php
+              foreach ($dscAllDataIDTime as $key => $value) {
+            ?>
+            <tr>
+              <td>
+                <?php
+                  echo $value["Sensor1"]  
                 ?>
               </td>
             </tr>
