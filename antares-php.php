@@ -863,6 +863,7 @@ class antares_php {
   // Discover all data ID Antares.id in Particular Time
   // ==========================================
   function dscAllDataIDTime($datetime,$deviceName,$projectName){
+    $time = time();
     $keyacc = "{$this->key}";
     $header = array(
       "X-M2M-Origin: $keyacc",
@@ -918,6 +919,7 @@ class antares_php {
         array_push($raw_data,$raw[0]["m2m:cin"]["rn"]);
         // var_dump($raw_data);
         // die();
+        print $time;
         curl_close($cin);  
       }
       return $raw_data; //-> Array

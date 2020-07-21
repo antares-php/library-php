@@ -19,7 +19,7 @@ $datetime = $_POST["datetime"];
 //$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
 //$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
 //$dscAllSubApp = $antares->dscAllSubApp('aww');
-$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'newSensor3','mns');
+//$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'newSensor3','mns');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
@@ -30,12 +30,12 @@ else if (array_key_exists('limit2', $_POST)) {
   $dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit2,'nyoba','aww');
 }
 
-// else if (array_key_exists('datetime', $POST)) {
-//   $datetime = $_POST["datetime"];
-//   $dscAllDataIDTime = $antares->dscAlldataIDTime($datetime,'newSensor3','mns');
-//   var_dump($dscAllDataIDTime);
-//   die();
-// }
+else if (array_key_exists('datetime', $POST)) {
+  $datetime = $_POST["datetime"];
+  $dscAllDataIDTime = $antares->dscAlldataIDTime($datetime,'newSensor3','mns');
+  var_dump($dscAllDataIDTime);
+  die();
+}
 ?>
 
 <!DOCTYPE html> 
@@ -298,7 +298,7 @@ else if (array_key_exists('limit2', $_POST)) {
               <tr>
                 <th>Date Time : </th>
                 <th>
-                  <input type="date-time" id="datetime" name="datetime" value="Year-Month-DayTHour:Minute"><br>
+                  <input type="datetime-local" id="datetime" name="datetime" value="Year-Month-DayTHour:Minute"><br>
                 </th>
                 <th> 
                   <input type="submit" name="button1" class="button" value="Set Particular Time" />  
@@ -318,7 +318,7 @@ else if (array_key_exists('limit2', $_POST)) {
             <tr>
               <td>
                 <?php
-                  echo $value["Sensor1"]  
+                  echo $value  
                 ?>
               </td>
             </tr>
