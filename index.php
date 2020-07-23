@@ -32,12 +32,6 @@ else if (array_key_exists('limit2', $_POST)) {
   $limit2 = $_POST["limit2"];
   $dscAllDataIDLimit = $antares->dscAllDataIDLimit($limit2,'nyoba','aww');
 }
-
-else if (array_key_exists('datetime', $POST)) {
-  $datetime = $_POST["datetime"];
-  $dscAllDataIDTime = $antares->dscAlldataIDTime($datetime,'nyoba','aww');
-
-}
 ?>
 
 <!DOCTYPE html> 
