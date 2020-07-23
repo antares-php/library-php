@@ -2,24 +2,27 @@
 
 include('antares-php.php');
 $antares = new antares_php();
-$antares->set_key('10f9b36c4320a16e:57cdfceb69b0bfdc');
+$antares->set_key('520906366fdba82e:d4fca3e60014c303');
 
 $datetime = $_POST["datetime"];
-//$yourdata = '{"Sensor1":"coba1","Sensor2":"coba2"}';
+//$yourdata = '{"Sensor1":"coba5","Sensor2":"coba6"}';
 //$antares->send($yourdata,'nyoba', 'aww');  
 
 //$antares->appCreate('NyobaDeui');
 //$antares->deviceCreate('nyoba','aww');
 //$antares->appDelete('ntap');
 //$antares->deviceDelete('nyoba','aww');
-//$yourdata = $antares->get('nyoba', 'aww');
-//$yourall = $antares->get_all('nyoba', 'aww');
-//$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
-//$dscAllDevice = $antares->dscAllDevice('aww');
-//$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
-//$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
-//$dscAllSubApp = $antares->dscAllSubApp('aww');
-//$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'newSensor3','mns');
+$yourdata = $antares->get('nyoba', 'aww');
+$yourall = $antares->get_all('nyoba', 'aww');
+$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
+$dscAllDevice = $antares->dscAllDevice('aww');
+$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
+$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
+$dscAllSubApp = $antares->dscAllSubApp('aww');
+$datetime = preg_replace('/-/i','',$datetime);
+$datetime = preg_replace('/:/i','',$datetime);
+//var_dump($datetime);die();
+$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'nyoba','aww');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
@@ -32,9 +35,8 @@ else if (array_key_exists('limit2', $_POST)) {
 
 else if (array_key_exists('datetime', $POST)) {
   $datetime = $_POST["datetime"];
-  $dscAllDataIDTime = $antares->dscAlldataIDTime($datetime,'newSensor3','mns');
-  var_dump($dscAllDataIDTime);
-  die();
+  $dscAllDataIDTime = $antares->dscAlldataIDTime($datetime,'nyoba','aww');
+
 }
 ?>
 
@@ -298,7 +300,7 @@ else if (array_key_exists('datetime', $POST)) {
               <tr>
                 <th>Date Time : </th>
                 <th>
-                  <input type="datetime-local" id="datetime" name="datetime" value="Year-Month-DayTHour:Minute"><br>
+                  <input type="datetime-local" step="1" id="datetime" name="datetime" value="YearMonthDayTHour:Minute"><br>
                 </th>
                 <th> 
                   <input type="submit" name="button1" class="button" value="Set Particular Time" />  

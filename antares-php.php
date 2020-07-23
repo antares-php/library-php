@@ -859,9 +859,9 @@ class antares_php {
     curl_close($curl);
   }
 
-  // ==========================================
+  // ==================================================
   // Discover all data ID Antares.id in Particular Time
-  // ==========================================
+  // ==================================================
   function dscAllDataIDTime($datetime,$deviceName,$projectName){
     $time = time();
     $keyacc = "{$this->key}";
@@ -873,7 +873,7 @@ class antares_php {
     
     $curl = curl_init();
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/$projectName/$deviceName"."/?fu=1&ty=4&crb=".$datetime,
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/$projectName/$deviceName"."/?fu=1&ty=4&lim=5&crb=".$datetime,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
@@ -891,12 +891,13 @@ class antares_php {
     if($httpCode != "404") {
       //CONVERT to array
       $raw = json_decode('['.$response.']', true);
-      
+      //var_dump($raw);
+      //die();
       //REMOVE header
       $temp_url = $raw[0]["m2m:uril"];
       $count_temp = count($temp_url);
       $raw_data = [];
-      
+
       //GET data
       for($i = 0; $i < $count_temp; $i++){
         $cin = curl_init();
@@ -919,7 +920,7 @@ class antares_php {
         array_push($raw_data,$raw[0]["m2m:cin"]["rn"]);
         // var_dump($raw_data);
         // die();
-        print $time;
+        //print $time;
         curl_close($cin);  
       }
       return $raw_data; //-> Array
