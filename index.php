@@ -23,6 +23,7 @@ $datetime = preg_replace('/-/i','',$datetime);
 $datetime = preg_replace('/:/i','',$datetime);
 //var_dump($datetime);die();
 $dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'nyoba','aww');
+//$antares->deleteSubDevice('nyoba','aww');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
