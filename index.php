@@ -2,28 +2,32 @@
 
 include('antares-php.php');
 $antares = new antares_php();
-$antares->set_key('520906366fdba82e:d4fca3e60014c303');
+$antares->set_key('10f9b36c4320a16e:57cdfceb69b0bfdc');
 
 $datetime = $_POST["datetime"];
-//$yourdata = '{"Sensor1":"coba5","Sensor2":"coba6"}';
-//$antares->send($yourdata,'nyoba', 'aww');  
+$subs = $_POST["subs"];
+$newSubs = $_POST["newSubs"];
 
+$yourdata = '{"Sensor1":"123","Sensor2":"123"}';
+$antares->send($yourdata,'newSensor2', 'mns');  
 //$antares->appCreate('NyobaDeui');
 //$antares->deviceCreate('nyoba','aww');
 //$antares->appDelete('ntap');
 //$antares->deviceDelete('nyoba','aww');
-$yourdata = $antares->get('nyoba', 'aww');
-$yourall = $antares->get_all('nyoba', 'aww');
-$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
-$dscAllDevice = $antares->dscAllDevice('aww');
-$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
-$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
-$dscAllSubApp = $antares->dscAllSubApp('aww');
-$datetime = preg_replace('/-/i','',$datetime);
-$datetime = preg_replace('/:/i','',$datetime);
+//$yourdata = $antares->get('nyoba', 'aww');
+//$yourall = $antares->get_all('nyoba', 'aww');
+//$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
+//$dscAllDevice = $antares->dscAllDevice('aww');
+//$dscAllApp = $antares->dscAllApp('axxray@gmail.com');
+//$dscAllSubDevice = $antares->dscAllSubDevice('newSensor2','mns');
+//$dscAllSubApp = $antares->dscAllSubApp('mns');
+//$datetime = preg_replace('/-/i','',$datetime);
+//$datetime = preg_replace('/:/i','',$datetime);
 //var_dump($datetime);die();
-$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'nyoba','aww');
-//$antares->deleteSubDevice('nyoba','aww');
+//$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'nyoba','aww');
+//$antares->deleteSubDevice('newSensor2','mns');
+$antares->subDevice($subs,'newSensor2','mns');
+//$antares->updateSubDevice($newSubs,'newSensor2','mns');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
@@ -324,7 +328,42 @@ else if (array_key_exists('limit2', $_POST)) {
             ?>
           </table>
         </div>
-
+        <div class="col-md-6">
+          <h1>Subscribe to Device</h1>
+          <table>
+            <form method="post">
+              <tr>
+                <th>URL : </th>
+                <th>
+                  <input type="text" id="subs" name="subs" value=""><br>
+                </th>
+                <th> 
+                  <input type="submit" name="button1" class="button" value="Subscribe" />  
+                </th>
+              </tr>
+            </form> 
+          </table>
+          <br><br>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h1>Update Subscribe to Device</h1>
+          <table>
+            <form method="post">
+              <tr>
+                <th>URL : </th>
+                <th>
+                  <input type="text" id="newSubs" name="newSubs" value=""><br>
+                </th>
+                <th> 
+                  <input type="submit" name="button1" class="button" value="Subscribe" />  
+                </th>
+              </tr>
+            </form> 
+          </table>
+          <br><br>
+          </table>
+        </div>
       </div>
     </div>  
   </body> 
