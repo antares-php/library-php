@@ -26,7 +26,7 @@ $antares->send($yourdata,'newSensor2', 'mns');
 //var_dump($datetime);die();
 //$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'nyoba','aww');
 //$antares->deleteSubDevice('newSensor2','mns');
-$antares->subDevice($subs,'newSensor2','mns');
+//$antares->subDevice($subs,'newSensor2','mns');
 //$antares->updateSubDevice($newSubs,'newSensor2','mns');
 
 if(array_key_exists('limit', $_POST)) { 
