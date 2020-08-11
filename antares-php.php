@@ -4,31 +4,6 @@
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //=================================================================================
 session_start();
 class antares_php {
@@ -126,22 +101,47 @@ class antares_php {
   // ==========================
   // UPDATE a device Antares.id by name [ON WORKING]
   // ===========================
-  function updateCreate('new-parameter-here',$deviceName,$projectName){
+  function updateDevice($deviceNew,$deviceName,$projectName){
     $keyacc = "{$this->key}";
-
     $header = array(
       "X-M2M-Origin: $keyacc",
-      // "X-M2M-Origin: ",
       "Content-Type: application/json;ty=3",
-      "Accept: application/json"
+      "Accept: application/json" 
     );
-
+    
     $curl = curl_init();
-    $dataSend = array(("m2m:cnt") => array("rn" => $deviceName));
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/$projectName/$deviceName"."/?ty=3",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => $header,
+    ));
+    curl_exec($curl);
+    //GET json Respone -> String
+    $response = curl_exec($curl);
+    // CHECK respone status
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    if($httpCode != "404") {
+      //CONVERT to array
+      $raw = json_decode('['.$response.']', true);
+      //REMOVE header
+      $temp_url = $raw[0]["m2m:cnt"]["rn"];
+      //$count_temp = count($temp_url);
+      $raw_data =$temp_url;
+      var_dump($raw_data);
+      die();
+    }
+    $curl = curl_init();
+    $dataSend = array(("m2m:cnt") => array("rn" => ($deviceNew)));
     $data_encode = json_encode($dataSend);
     
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."", //perlu disesuaikan
+      CURLOPT_URL => "https://platform.antares.id:8443/~/antares-cse/antares-id/".$projectName."/".$deviceName."",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
@@ -153,15 +153,12 @@ class antares_php {
       CURLOPT_HTTPHEADER => $header,
     ));
     curl_exec($curl);
-    $response = curl_exec($curl);
-    
-    // CHECK respone status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    if($httpCode == "404") {
-      echo "ERROR[003] : Something WRONG when CREATE data";
-    }
-    curl_close($curl);
-    return $response;
+    //   return $raw_data; //-> Array
+    // }else{
+    //   echo "ERROR[001] : Application Name or Device Name is Wrong";
+    // }
+    // curl_close($curl);
   }
 
   // ============================
@@ -191,7 +188,8 @@ class antares_php {
     ));
     curl_exec($curl);
     $response = curl_exec($curl);
-    
+    var_dump($response);
+    die();
     // CHECK respone status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if($httpCode == "404") {
