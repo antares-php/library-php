@@ -793,7 +793,8 @@ class antares_php {
     if($httpCode != "404") {
       //CONVERT to array
       $raw = json_decode('['.$response.']', true);
-      
+      //var_dump($raw);
+      //die();
       //REMOVE header
       $temp_url = $raw[0]["m2m:uril"];
       $count_temp = count($temp_url);
@@ -823,7 +824,10 @@ class antares_php {
         array_push($raw_data,$raw[0]["m2m:sub"]["nu"]);
         curl_close($cin);  
       }
+      //var_dump($raw_data[0]);
+      //die;
       return $raw_data[0]; //-> Array
+;
     }else{
       echo "ERROR[001] : Application Name or Device Name is Wrong";
     }
@@ -1009,7 +1013,8 @@ class antares_php {
       $temp_url = $raw[0]["m2m:uril"];
       $count_temp = count($temp_url);
       $raw_data = [];
-      
+      //var_dump($count_temp);
+      //die;  
       //GET data
       for($i = 0; $i < $count_temp; $i++){
         $cin = curl_init();
@@ -1113,8 +1118,8 @@ class antares_php {
     curl_exec($curl);
     //GET json Respone -> String
     $response = curl_exec($curl);
-    var_dump($response);
-    die();
+    //var_dump($response);
+    //die();
     // CHECK respone status
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if($httpCode != "404") {

@@ -2,32 +2,32 @@
 
 include('antares-php.php');
 $antares = new antares_php();
-$antares->set_key('10f9b36c4320a16e:57cdfceb69b0bfdc');
+$antares->set_key('520906366fdba82e:d4fca3e60014c303');
 
 $datetime = $_POST["datetime"];
 $subs = $_POST["subs"];
 $newSubs = $_POST["newSubs"];
 
-$yourdata = '{"Sensor1":"123","Sensor2":"123"}';
-$antares->send($yourdata,'newSensor2', 'mns');  
+//$yourdata = '{"Sensor1":"abc","Sensor2":"abc"}';
+//$antares->send($yourdata,'nyoba', 'aww');  
 //$antares->appCreate('NyobaDeui');
 //$antares->deviceCreate('nyoba','aww');
 //$antares->appDelete('ntap');
 //$antares->deviceDelete('nyoba','aww');
-//$yourdata = $antares->get('nyoba', 'aww');
-//$yourall = $antares->get_all('nyoba', 'aww');
-//$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
-//$dscAllDevice = $antares->dscAllDevice('aww');
-//$dscAllApp = $antares->dscAllApp('axxray@gmail.com');
-//$dscAllSubDevice = $antares->dscAllSubDevice('newSensor2','mns');
-//$dscAllSubApp = $antares->dscAllSubApp('mns');
-//$datetime = preg_replace('/-/i','',$datetime);
-//$datetime = preg_replace('/:/i','',$datetime);
+$yourdata = $antares->get('nyoba', 'aww');
+$yourall = $antares->get_all('nyoba', 'aww');
+$dscAllDataID = $antares->dscAllDataID('nyoba','aww');
+$dscAllDevice = $antares->dscAllDevice('aww');
+$dscAllApp = $antares->dscAllApp('johanantoniussalim@gmail.com');
+$dscAllSubDevice = $antares->dscAllSubDevice('nyoba','aww');
+$dscAllSubApp = $antares->dscAllSubApp('aww');
+$datetime = preg_replace('/-/i','',$datetime);
+$datetime = preg_replace('/:/i','',$datetime);
 //var_dump($datetime);die();
-//$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'nyoba','aww');
-//$antares->deleteSubDevice('newSensor2','mns');
-//$antares->subDevice($subs,'newSensor2','mns');
-//$antares->updateSubDevice($newSubs,'newSensor2','mns');
+$dscAllDataIDTime = $antares->dscAllDataIDTime($datetime,'nyoba','aww');
+//$antares->deleteSubDevice('nyoba','aww');
+$antares->subDevice($subs,'nyoba','aww');
+//$antares->updateSubDevice($newSubs,'nyoba','aww');
 
 if(array_key_exists('limit', $_POST)) { 
   $limit = $_POST["limit"];
